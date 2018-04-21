@@ -1,34 +1,14 @@
-
-import telebot, requests, threading, funcs
+import telebot, requests, threading, funcs, sys, lang
 from reply_keyboard_markups import Keyboard
-import lang
 from sql import SQL
 from vk import Session, API, exceptions
-import sys
+from settings import SETTINGS
 
-token = '415193750:AAF6ndOpFEhi8MEMmINmUIm8Lj2bWACnhus'
-tg = telebot.TeleBot(token)
+tg = telebot.TeleBot(SETTINGS.TOKEN)
 
-db = SQL('vk2tl.db')
+db = SQL(SETTINGS.DB_NAME)
 keyboard = Keyboard(tg)
 funcs.InitUsers(db.select_all())
-
-"""
-@tg.message_handler(commands=['auth'])
-def CheckAuth(message):
-    data = db.get_data(message.chat.id)
-    vk = API(Session(data[1]))
-
-    if data[1] != '':
-        try:
-            vk.messages.get()
-        except exceptions.VkAPIError:
-            tg.send_message(chat_id=message.chat.id, text='Проблема с ключом. Введите новый или проклинайте креейторов.')
-            db.set_status(message.caht.id, 3, "" )
-    else:
-        tg.send_message(chat_id=message.chat.id, text='Вы не ввели свой ACCES_KEY')
-        db.set_status(message.caht.id, 3, "" )
-"""
 
 @tg.message_handler(commands=['menu'])
 def BackToMenu(message):

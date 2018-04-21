@@ -1,11 +1,10 @@
-import telebot, requests, threading, asyncio, json, io, aiohttp, traceback
+import telebot, requests, threading, asyncio, json, io, aiohttp, traceback, lang
 from vk.exceptions import *
 from vk import Session, API
 from PIL import Image
-import lang
+from settings import SETTINGS
 
-token = '415193750:AAF6ndOpFEhi8MEMmINmUIm8Lj2bWACnhus'
-tg = telebot.TeleBot(token)
+tg = telebot.TeleBot(SETTINGS.TOKEN)
 
 loop = asyncio.get_event_loop()
 

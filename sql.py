@@ -1,6 +1,7 @@
 import sqlite3, funcs, telebot, traceback
+from settings import SETTINGS
 
-token = '415193750:AAF6ndOpFEhi8MEMmINmUIm8Lj2bWACnhus'
+token = SETTINGS.TOKEN
 bot = telebot.TeleBot(token)
 
 class SQL:

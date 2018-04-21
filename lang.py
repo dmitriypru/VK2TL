@@ -1,4 +1,5 @@
 auth_url = 'https://oauth.vk.com/authorize?client_id=3544010&scope=photos,video,pages,messages,docs,offline&response_type=token'
+
 class ru:
     unknown_error = '| Неизвестная ошибка. Попробуйте позже, либо напишите о проблеме куда-нибудь (from <b>VK</b>2<b>TL</b>) |'
     unknown_file_type = '| Отправка файлов такого типа в <b>данный момент</b> не реализована. Приносим извинения. (from <b>VK</b>2<b>TL</b>) |'
