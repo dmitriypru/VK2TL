@@ -6,7 +6,7 @@ from settings import SETTINGS
 
 tg = telebot.TeleBot(SETTINGS.TOKEN)
 
-db = SQL(SETTINGS.DB_NAME)
+db = SQL(SETTINGS().DB_NAME)
 keyboard = Keyboard(tg)
 funcs.InitUsers(db.select_all())
 

@@ -4,7 +4,7 @@ from vk import Session, API
 from PIL import Image
 from settings import SETTINGS
 
-tg = telebot.TeleBot(SETTINGS.TOKEN)
+tg = telebot.TeleBot(SETTINGS().TOKEN)
 
 loop = asyncio.get_event_loop()
 

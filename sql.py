@@ -1,8 +1,7 @@
 import sqlite3, funcs, telebot, traceback
 from settings import SETTINGS
 
-token = SETTINGS.TOKEN
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(SETTINGS().TOKEN)
 
 class SQL:
 
