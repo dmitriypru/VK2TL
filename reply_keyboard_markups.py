@@ -27,13 +27,13 @@ class Keyboard:
     def friends_menu(self, data):
         access_key = data[1]
         vk = API(Session(access_token=access_key))
-        friends = vk.friends.get(order='hints', count=5)
+        friends = vk.friends.get(order='hints', count=5,v='5.74')['items']
         users = []
         keyboard = telebot.types.InlineKeyboardMarkup()
         userbtn = []
         for i in friends:
-            temp_user = vk.users.get(user_ids=i)[0]
-            users.append((temp_user['first_name'] + ' ' + temp_user['last_name'],temp_user['uid']))
+            temp_user = vk.users.get(user_ids=i,v='5.74')[0]
+            users.append((temp_user['first_name'] + ' ' + temp_user['last_name'],temp_user['id']))
             userbtn.append(createBtn(text=users[friends.index(i)][0],callback_data='write_to_friend '+str(i)))
         userbtn.append(createBtn(text='>>',callback_data='topage_1'))
         keyboard.row(userbtn[0])
@@ -46,15 +46,15 @@ class Keyboard:
         page = int(page)
         access_key = data[1]
         vk = API(Session(access_token=access_key))
-        friends = vk.friends.get(order='hints', count=(page*6)+5)
+        friends = vk.friends.get(order='hints', count=(page*6)+5,v='5.74')['items']
         friends = friends[(((page-1)*6)+5):]
         users = []
         userbtn = []
         keyboard = telebot.types.InlineKeyboardMarkup()
 
         for i in friends:
-            temp_user = vk.users.get(user_ids=i)[0]
-            users.append((temp_user['first_name'] + ' ' + temp_user['last_name'],temp_user['uid']))
+            temp_user = vk.users.get(user_ids=i,v='5.74')[0]
+            users.append((temp_user['first_name'] + ' ' + temp_user['last_name'],temp_user['id']))
             userbtn.append(createBtn(text=users[friends.index(i)][0],callback_data='write_to_friend '+str(i)))
             sleep(0.4)
         for i in range(floor(len(friends)/2)):
