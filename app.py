@@ -27,7 +27,7 @@ def MsgToFriend(message):
 
 @tg.message_handler(func=lambda a: 'Написать по ID' == a.text, content_types=['text'])
 def MsgById(message):
-    db.set_status(message.chat.id, 1, "")
+    db.set_status(message.chat.id, 1, "pussy fuck")
 
 @tg.callback_query_handler(func=lambda call: True)
 def CallbackChecker(call):
