@@ -4,6 +4,7 @@ from sql import SQL
 from vk import Session, API, exceptions
 from settings import SETTINGS
 
+telebot.apihelper.proxy = {'https':'https://80.211.141.177:8888'}
 tg = telebot.TeleBot(SETTINGS().TOKEN)
 
 db = SQL(SETTINGS().DB_NAME)
@@ -27,6 +28,7 @@ def MsgToFriend(message):
 
 @tg.message_handler(func=lambda a: 'Написать по ID' == a.text, content_types=['text'])
 def MsgById(message):
+    tg.send_message(chat_id=message.chat.id, text='DROP SEBASS::')
     db.set_status(message.chat.id, 1, "")
 
 @tg.callback_query_handler(func=lambda call: True)

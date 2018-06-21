@@ -25,6 +25,7 @@ class Keyboard:
         self.bot.send_message(chat_id=message.chat.id, text='Выберите пункт в меню.', reply_markup=keyboard)
 
     def friends_menu(self, data):
+        print(data, flush=True)
         access_key = data[1]
         vk = API(Session(access_token=access_key))
         friends = vk.friends.get(order='hints', count=5,v='5.74')['items']
