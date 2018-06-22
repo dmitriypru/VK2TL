@@ -1,4 +1,5 @@
-import sqlite3, funcs, telebot, traceback
+import sqlite3
+import funcs, telebot, traceback
 from settings import SETTINGS
 
 bot = telebot.TeleBot(SETTINGS().TOKEN)
@@ -50,6 +51,14 @@ class SQL:
                 return self.cursor.execute('UPDATE users SET is_writing= ?, reciever_id= ? WHERE tl_id= ?', (is_writing, str(reciever_id), tl_id))
             except Exception:
                 bot.send_message(chat_id='@vk2tl', text=traceback.format_exc())
+
+    def set_sender(self, tl_id, last_sender):
+        """ Устанавливаем значение последнего писавшего """
+        with self.connection:
+            try:
+                return self.cursor.execute('UPDATE users SET last_sender= ? WHERE tl_id= ?', (last_sender, tl_id))
+            except Exception:
+                print('akmadwkdaadwkjladwklawjdkljkdalkjl')
 
     def close(self):
         """ Закрываем текущее соединение с БД """
