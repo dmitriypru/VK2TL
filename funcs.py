@@ -3,6 +3,10 @@ from vk.exceptions import *
 from vk import Session, API
 from PIL import Image
 from settings import SETTINGS
+from sql import SQL
+
+#Database ialise
+db = SQL(SETTINGS().DB_NAME)
 
 tg = telebot.TeleBot(SETTINGS().TOKEN)
 
@@ -42,7 +46,11 @@ def AddUserToListen(tl_id, access_key):
                 if upd[i][0]==4 and upd[i][2]!=51 and upd[i][2]!=19 and upd[i][2]!=35 and upd[i][2]!=547 and upd[i][2]!=563:
                     user = vk.users.get(user_ids=upd[i][3],fields='sex',v='5.74')[0]
                     msg_text = str(upd[i][5])
-                    tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=lang.ru.UserReceiveHeader(user)+'\n'+msg_text)
+                    if upd[i][3] != db.get_data(tl_id)[4]:
+                        tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=lang.ru.UserReceiveHeader(user)+'\n'+msg_text)
+                    else:
+                        tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=msg_text)
+                        
                     msg = vk.messages.getById(message_ids=upd[i][1],v='5.74')['items'][0]
                     if msg.get('attachments') != None:
                         for a in msg['attachments']:
@@ -53,19 +61,7 @@ def AddUserToListen(tl_id, access_key):
                                 tg.send_audio(chat_id=tl_id, audio=a['audio']['url'])
                             elif a['type']=='doc':
                                 tg.send_document(chat_id=tl_id, data=a['doc']['url'])
-                            """"
-                            try:
-                                if a['type']=='photo':
-                                    img = a['photo']['photo_604']
-                                    tg.send_photo(chat_id=tl_id, photo=img)
-                                elif a['type']=='audio':
-                                    tg.send_audio(chat_id=tl_id, audio=a['audio']['url'])
-                                elif a['type']=='doc':
-                                    tg.send_document(chat_id=tl_id, data=a['doc']['url'])
-                            except:
-                                tg.send_message(parse_mode='HTML', chat_id=tl_id, text="{ Упс, <b>illegal</b> <i>content</i> подъехал (from <b>VK</b>2<b>TL</b>) }")
-                                tg.send_photo(chat_id=tl_id, photo='https://pp.userapi.com/c840238/v840238044/1224e/IqdKCxysOVQ.jpg')
-                            """
+                    db.set_sender(tl_id, upd[i][3])
 
 def SendMsg(tl_id, access_key, reciever_id, msg):
     session = Session(access_token=access_key)

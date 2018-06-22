@@ -22,7 +22,7 @@ class Keyboard:
         keyboard.row('Написать другу')
         keyboard.row('Написать по ID')
         keyboard.row('Настройки')
-        self.bot.send_message(chat_id=message.chat.id, text='Выберите пункт в меню.', reply_markup=keyboard)
+        self.bot.send_message(chat_id=message.chat.id, text='Выберите пункт в меню :', reply_markup=keyboard)
 
     def friends_menu(self, data):
         print(data, flush=True)

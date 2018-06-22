@@ -10,7 +10,7 @@ class ru:
         uid = user['id']
         first_name = user['first_name']
         last_name = user['last_name']
-        return('Вы пишите <a href="https://vk.com/id'+str(uid)+'">'+first_name+' '+last_name+'</a> (ID:<b>'+str(uid)+'</b>) :')
+        return('Вы пишите <a href="https://vk.com/id'+str(uid)+'">'+first_name+' '+last_name+'</a>:')
 
     def UserReceiveHeader(user):
         uid = user['id']
