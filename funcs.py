@@ -43,14 +43,13 @@ def AddUserToListen(tl_id, access_key):
             ts = r.json()['ts']
             upd = r.json()['updates']
             for i in range(len(upd)):
-                if upd[i][0]==4 and upd[i][2]!=51 and upd[i][2]!=19 and upd[i][2]!=35 and upd[i][2]!=547 and upd[i][2]!=563:
+                if upd[i][0]==4 and upd[i][2]!=51 and upd[i][2]!=19 and upd[i][2]!=35 and upd[i][2]!=547 and upd[i][2]!=563 and upd[i][2]!=3:
                     user = vk.users.get(user_ids=upd[i][3],fields='sex',v='5.74')[0]
                     msg_text = str(upd[i][5])
                     if upd[i][3] != db.get_data(tl_id)[4]:
-                        tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=lang.ru.UserReceiveHeader(user)+'\n'+msg_text)
-                    else:
-                        tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=msg_text)
-                        
+                        tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=lang.ru.UserReceiveHeader(user))
+                    tg.send_message(chat_id=tl_id, disable_web_page_preview=True, parse_mode='HTML', text=msg_text)
+
                     msg = vk.messages.getById(message_ids=upd[i][1],v='5.74')['items'][0]
                     if msg.get('attachments') != None:
                         for a in msg['attachments']:
